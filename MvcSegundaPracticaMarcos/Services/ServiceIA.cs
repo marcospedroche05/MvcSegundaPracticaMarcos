@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using MvcSegundaPracticaMarcos.Models;
+using Newtonsoft.Json;
 using System.Net.Http.Headers;
 using System.Text;
 
@@ -21,7 +22,7 @@ namespace MvcSegundaPracticaMarcos.Services
             {
                 client.DefaultRequestHeaders.Accept.Add(this.header);
 
-                var body = JsonConvert.SerializeObject(new { pregunta = pregunta });
+                var body = JsonConvert.SerializeObject(new PreguntaRequest { Pregunta = pregunta });
                 StringContent content = new StringContent(body, Encoding.UTF8, "application/json");
 
                 HttpResponseMessage response = await client.PostAsync(this.ApiUrl, content);
@@ -29,12 +30,12 @@ namespace MvcSegundaPracticaMarcos.Services
                 if (response.IsSuccessStatusCode)
                 {
                     string json = await response.Content.ReadAsStringAsync();
-                    dynamic result = JsonConvert.DeserializeObject<dynamic>(json);
-                    return result.respuesta;
+                    RespuestaIA resultado = JsonConvert.DeserializeObject<RespuestaIA>(json);
+                    return resultado.Respuesta;
                 }
                 else
                 {
-                    return "No se pudo obtener respuesta de la IA.";
+                    return $"Error: {response.StatusCode}";
                 }
             }
         }
