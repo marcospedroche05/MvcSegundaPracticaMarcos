@@ -1,0 +1,33 @@
+﻿@{
+    ViewData["Title"] = "Asistente IA de Conciertos";
+}
+
+<div class="container mt-4" style="max-width:700px;">
+    <h2 class="mb-1">🎵 Asistente IA de Conciertos</h2>
+    <p class="text-muted mb-4">Pregúntame sobre artistas, eventos o categorías</p>
+
+    <form method="post">
+        <div class="input-group mb-3">
+            <input type="text"
+                   name="pregunta"
+                   class="form-control form-control-lg"
+                   placeholder="¿Quién es el artista del evento Aitana?"
+                   value="@ViewBag.Pregunta"
+                   required />
+            <button class="btn btn-primary" type="submit">Preguntar</button>
+        </div>
+    </form>
+
+    @if (ViewBag.Respuesta != null)
+    {
+        <div class="card shadow-sm mt-3">
+            <div class="card-body">
+                <h6 class="text-muted mb-1">Tu pregunta:</h6>
+                <p class="fw-bold">@ViewBag.Pregunta</p>
+                <hr />
+                <h6 class="text-muted mb-1">Respuesta:</h6>
+                <p>@ViewBag.Respuesta</p>
+            </div>
+        </div>
+    }
+</div>
