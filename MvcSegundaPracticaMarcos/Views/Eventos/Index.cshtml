@@ -1,0 +1,30 @@
+﻿@model List<MvcSegundaPracticaMarcos.Models.Evento>
+
+@{
+    ViewData["Title"] = "Eventos";
+}
+
+<h2 class="mb-4">🎵 Todos los Eventos</h2>
+
+<div class="row row-cols-1 row-cols-md-3 g-4">
+    @foreach (var evento in Model)
+    {
+        <div class="col">
+            <div class="card h-100 shadow-sm">
+                <img src="@evento.Imagen" class="card-img-top" alt="@evento.Nombre"
+                     style="height:200px; object-fit:cover;"
+                     onerror="this.src='/images/placeholder.png'" />
+                <div class="card-body">
+                    <h5 class="card-title">@evento.Nombre</h5>
+                    <p class="card-text text-muted">🎤 @evento.Artista</p>
+                </div>
+                <div class="card-footer">
+                    <a asp-action="PorCategoria" asp-route-idcategoria="@evento.IdCategoria"
+                       class="btn btn-sm btn-outline-primary">
+                        Ver categoría
+                    </a>
+                </div>
+            </div>
+        </div>
+    }
+</div>
