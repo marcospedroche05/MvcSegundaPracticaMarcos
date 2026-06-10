@@ -20,13 +20,22 @@ namespace MvcSegundaPracticaMarcos.Controllers
 
         // POST /IA
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> Index(string pregunta)
         {
             if (!string.IsNullOrEmpty(pregunta))
             {
-                string respuesta = await this.service.PreguntarAsync(pregunta);
-                ViewBag.Pregunta = pregunta;
-                ViewBag.Respuesta = respuesta;
+                try
+                {
+                    string respuesta = await this.service.PreguntarAsync(pregunta);
+                    ViewBag.Pregunta = pregunta;
+                    ViewBag.Respuesta = respuesta;
+                }
+                catch (Exception ex)
+                {
+                    ViewBag.Pregunta = pregunta;
+                    ViewBag.Respuesta = $"ERROR: {ex.Message}";
+                }
             }
             return View();
         }
